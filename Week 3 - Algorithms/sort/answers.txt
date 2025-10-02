@@ -1,0 +1,30 @@
+sort1 uses: Bubble Sort
+
+How do you know?:
+I know this because the performance in general is bad,
+but the sorted list, i.e. best case scenario, is much more performant.
+the Bubble O(n^2), Omega(n)
+    reversed50000.txt runtime = user: 5.0s
+    random50000.txt runtime = user: 5.1s
+    sorted50000.txt runtime = user: 0.025s
+
+sort2 uses: Merge Sort
+
+How do you know?:
+I know this because it's by far the most performant on a large dataset.
+Also it has the same upper and lower bound performance.
+    reversed50000.txt runtime = user 0.033s
+    random50000.txt runtime = user: 0.029s
+    sorted50000.txt runtime = user: 0.026s
+
+sort3 uses: Selection Sort
+
+How do you know?:
+I know this is selection sort because I already know what the other two
+options are. Beyond that though, similar performance on reversed, and sorted
+lists tell me the big o, and the omega of this algorithm are the same too.
+This would make sense for selection sort because theta = n^2 like with merge sort.
+reversed50000.txt runtime = user: 2.01s
+random50000.txt runtime = user: 1.85s
+sorted50000.txt runtime = user: 1.79s
+
