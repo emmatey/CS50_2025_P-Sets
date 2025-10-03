@@ -1,0 +1,11 @@
+When creating my first attempt I made sure to write the entire thing in pseudo code first. This allowed me to tackle logical errors quickly and made for a much faster implementation.
+Because of this I was proud, but i had the nagging suspicion what I was doing was too complex.
+
+After I passed the check50 and submitted the problem it showed it to an LLM and was congratulated on what a clever girl I was but then they said the 
+solution was convoluted and two passes makes things much simpler.
+
+I made this second edition because I knew it would be easy, and it's a good reminder 
+
+SEPARATION OF CONCERNS
+
+it's something to consider for loops too :P
