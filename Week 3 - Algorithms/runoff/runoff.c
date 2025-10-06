@@ -127,29 +127,30 @@ int main(int argc, string argv[])
 // Record preference if vote is valid
 bool vote(int voter, int rank, string name)
 {
-    int cantidate_index = -1;
+    int candidate_index = -1;
     // check if votee exists, and if so record their idx.
     for (int i = 0; i < candidate_count; i++)
     {
         if (strcmp(name, candidates[i].name) == 0)
         {
-            cantidate_index = i;
+            candidate_index = i;
+            break;
         }
     }
-    if (cantidate_index == -1)
+    if (candidate_index == -1)
     {
         return false;
     }
     // check if already voted for votee.
     for (int i = 0; i < candidate_count; i++)
     {
-        if (preferences[voter][i] == cantidate_index)
+        if (preferences[voter][i] == candidate_index)
         {
             return false;
         }
     }
     // if checks pass, record vote.
-    preferences[voter][rank] = cantidate_index;
+    preferences[voter][rank] = candidate_index;
     return true;
 }
 
@@ -177,7 +178,6 @@ void tabulate(void)
 // Print the winner of the election, if there is one
 bool print_winner(void)
 {
-    const int VOTE_QTY = voter_count;
     int threshold = (voter_count / 2) + 1;
 
     for (int i = 0; i < candidate_count; i++)
