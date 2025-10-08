@@ -1,0 +1,1 @@
+This wasn't part of any p-set I just wanted to see how much I could poke at undefined memory locations before stuff crashed. This program just searches garbage values for no reason
