@@ -1,3 +1,3 @@
 ## This is ... my homework :P
 
-This is the place for recordig all the programs I've made for CS50, a free online CS class. Check it out and try for yourself at "https://cs50.harvard.edu/x/". Along with programs sometimes I'll add writings.
+This is the place for recording all the programs I've made for CS50, a free online CS class. Check it out and try for yourself at "https://cs50.harvard.edu/x/". Along with programs sometimes I'll add writings.
