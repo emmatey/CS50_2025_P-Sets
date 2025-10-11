@@ -1,0 +1,17 @@
+Another p-set, another bizarre and over engineered solution :P
+
+My initial attempt at the blur filter was done via "brute force", and although it worked correctly, the code itself was disgusting. repetitive and difficult to maintain. 
+
+Before this week my approach to problems has been to see what I can come up with myself, without any exposure to established solutions. My justification for this is 1. it's more fun, and 2. It forces me to be creative with my limited tool set.
+
+The issue is, it also forms bad habits, and as things become more complex, surely at some point my brute force solutions will no longer work.
+
+My new strategy is to search for the so called canonical solution first, read about and understand the ideas behind that, and the go back and implement it in my own system.
+
+Notes from final attempt
+
+The key implementation detail that I changed was to loop from int I/j = -1 in the child function. This child function is used to check the neighborhood of one pixel. Therefore if we’re on pixel 0,0 and we start the child iteration at -1. we can add 0 to -1 and then later check if said direction is within bounds 0 > width/height. Since this will add to a number less than 0 it wont count said pixel. 
+
+The sobel operator was easy to implement once I figured this out. I just had to combine this edge checking mechanism with indexing a custom defined 2d array that represented each operator. 
+
+A big thank you to user "Salem" on "cprogramming.com" for giving me the -1 idx idea love u :3
