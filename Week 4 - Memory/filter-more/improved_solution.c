@@ -108,7 +108,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
         if(tmp_image == NULL)
         {
             exit(EXIT_FAILURE);
-       submitted solution }
+        }
     }
     for(int i = 0; i < height; i++)
     {
@@ -116,7 +116,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
         // malloc returns the pointer to this array
         // therefore tmp_image is an array of pointers to other arrays.
         tmp_image[i] = (RGBTRIPLE *)malloc(width * sizeof(RGBTRIPLE));
-        if(tmp_image == NULL)
+        if(tmp_image[i] == NULL)
         {
             exit(EXIT_FAILURE);
         }
@@ -164,17 +164,17 @@ RGBTRIPLE do_sobel(int i, int j, int height, int width, RGBTRIPLE **image)
 
     for (int row = -1, kernel_y = 0; row < 2; row++, kernel_y++)
     {
-        for (int row_idx = -1, kernel_x = 0; row_idx < 2; row_idx++, kernel_x++)
+        for (int col = -1, kernel_x = 0; col < 2; col++, kernel_x++)
         {
-            if ((row + i) >= 0 && (row + i) < height && (row_idx + j) >= 0 && (row_idx + j) < width)
+            if ((row + i) >= 0 && (row + i) < height && (col + j) >= 0 && (col + j) < width)
             {
-                gxBlu += (image[row + i][row_idx + j].rgbtBlue) * (Gx[kernel_y][kernel_x]);
-                gxGrn += (image[row + i][row_idx + j].rgbtGreen) * (Gx[kernel_y][kernel_x]);
-                gxRed += (image[row + i][row_idx + j].rgbtRed) * (Gx[kernel_y][kernel_x]);
+                gxBlu += (image[row + i][col + j].rgbtBlue) * (Gx[kernel_y][kernel_x]);
+                gxGrn += (image[row + i][col + j].rgbtGreen) * (Gx[kernel_y][kernel_x]);
+                gxRed += (image[row + i][col + j].rgbtRed) * (Gx[kernel_y][kernel_x]);
 
-                gyBlu += (image[row + i][row_idx + j].rgbtBlue) * (Gy[kernel_y][kernel_x]);
-                gyGrn += (image[row + i][row_idx + j].rgbtGreen) * (Gy[kernel_y][kernel_x]);
-                gyRed += (image[row + i][row_idx + j].rgbtRed) * (Gy[kernel_y][kernel_x]);
+                gyBlu += (image[row + i][col + j].rgbtBlue) * (Gy[kernel_y][kernel_x]);
+                gyGrn += (image[row + i][col + j].rgbtGreen) * (Gy[kernel_y][kernel_x]);
+                gyRed += (image[row + i][col + j].rgbtRed) * (Gy[kernel_y][kernel_x]);
             }
         }
     }
@@ -219,7 +219,7 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
         // malloc returns the pointer to this array
         // therefore tmp_image is an array of pointers to other arrays.
         tmp_image[i] = (RGBTRIPLE *)malloc(width * sizeof(RGBTRIPLE));
-        if(tmp_image == NULL)
+        if(tmp_image[i] == NULL)
         {
             exit(EXIT_FAILURE);
         }
