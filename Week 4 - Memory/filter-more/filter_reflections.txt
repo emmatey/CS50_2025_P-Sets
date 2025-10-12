@@ -15,3 +15,13 @@ The key implementation detail that I changed was to loop from int I/j = -1 in th
 The sobel operator was easy to implement once I figured this out. I just had to combine this edge checking mechanism with indexing a custom defined 2d array that represented each operator. 
 
 A big thank you to user "Salem" on "cprogramming.com" for giving me the -1 idx idea love u :3
+
+After feeding my finished solution into an LLM, it pointed out that dynamically allocating an array with the syntax 
+"RGBTRIPLE tmp_image[height][width];" makes the array on the stack instead of the heap. This didn't cause any issues
+but risks a stack overflow if the image ingested is too large.
+
+I improved the program by allocating on the heap instead. This could potentially make the program run slower because of the fragmented nature of my solution, but it seems to work instantly regardless and I feel the risk mitigation and practice was worth any risk of slowdown.
+
+first an array of pointers which each point to the first index of an individual array of pixels was created. this initial malloc call returns a double pointer because malloc returns a pointer, and the thing it was pointing to was an array of pointers.
+
+I then looped through this array and at each index allocated a separate array wide enough to hold the pixel structs. 
