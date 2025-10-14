@@ -14,19 +14,18 @@ int main(int argc, char *argv[])
     if (mem_card == NULL)
     {
         printf("Input file %s could not be read.\n", argv[1]);
-        fclose(mem_card);
         return 1;
     }
 
     unsigned char *read_buffer = malloc(sizeof(unsigned char) * 512);
     if (read_buffer == NULL)
     {
-        free(read_buffer);
+        fclose(mem_card);
         printf("unable to allocate memory for read_buffer.\n");
         return 2;
     }
     // initialize to -1 to catch picture 000
-    int counter = -1;
+    int counter = 0;
     FILE *nth_file = NULL;
     bool found = false;
 
@@ -38,7 +37,6 @@ int main(int argc, char *argv[])
 
         if (jpg_sig)
         {
-            counter++;
             found = true;
 
             if (nth_file != NULL)
@@ -54,13 +52,20 @@ int main(int argc, char *argv[])
             {
                 fwrite(read_buffer, 512, 1, nth_file);
             }
+
+            counter++;
         }
         else if (found == true)
         {
             fwrite(read_buffer, 512, 1, nth_file);
         }
     }
+
+    if(found == true)
+    {
+        fclose(nth_file);
+    }
     fclose(mem_card);
-    fclose(nth_file);
     free(read_buffer);
+    return 0;
 }
