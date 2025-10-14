@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
         printf("unable to allocate memory for read_buffer.\n");
         return 2;
     }
-    // initialize to -1 to catch picture 000
+    
     int counter = 0;
     FILE *nth_file = NULL;
     bool found = false;
