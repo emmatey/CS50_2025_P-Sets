@@ -142,7 +142,7 @@ bool vote(int voter, int rank, string name)
         return false;
     }
     // check if already voted for votee.
-    for (int i = 0; i < candidate_count; i++)
+    for (int i = 0; i < rank; i++)
     {
         if (preferences[voter][i] == candidate_index)
         {
