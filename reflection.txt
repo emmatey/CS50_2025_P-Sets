@@ -1,0 +1,97 @@
+In this pset I was tasked with implementing a hash table.
+The context of the hash table was a spell checking program.
+The goal of the program was to spellcheck the input text as fast as possible
+
+The naieve solution to this problem would be to iterate over the 
+array of valid words, comparing the input word at each step until either
+said word is found, or the end of the dictionary is reached.
+This would work, but it would also be extremely slow.
+
+The time complexity would be 
+O(n * dict_size) or O(NM), this is a form of quadratic time.
+
+A much faster way to search the dictionary is by using a hash table.
+This data structure works by converting each input word into a number i.e "hashing"
+and using that number as a storage location.i.e. an array index. 
+
+By "hashing" we mean to say feeding an arbitrary piece of information to a "hash function".
+a hash function converts this information into an integer we can use as an index in an array
+to store information at.  A crucial thing to remember about a hash funciton is that it's
+'deterministic', meaning that every time you feed x data into the funciton you will ALWAYS get y
+as a result. A good hash funciton also will have wildly different outputs based on small changes to 
+an input, this is known as "avalanching" and is required to evenly distribute datasets that 
+contain patterns.
+
+In an initial setup phase, the dictionary itself is "hashed" meaning that
+an array is instantiated, and then for every word in the dictionary, the given word
+is converted into a number, and then it is stored at that location in the array.
+In the event that this location is occupied already we have a situation known as a "colision".
+
+Assuming there's either no colision, or a colision is dealt with, we now in memory, have a processed
+dictionary whose data in the shape of a hash table. And as words from the input text come in, we can
+use this structure to quickly search if the input word is within the dictonary by "hashing" the word.
+This will return a number that I can then use to check one, and only one, location in an array, instead 
+of EVERY location in the array like with the nieve solution.
+
+
+
+One. Open addressing aka linear probing.
+With this method if a colision happens, the data structure will simply move to the neighboring array index,
+and then put the value there instead.
+
+    The advantage of this is speed, as a computer is fastest at processing contiguous chunks of data than disperate
+    data at various locations in RAM.
+
+    The disadvantage, though, is that it's more complex to retrieve data. For example, imagine what conditions
+    you would check if writing a retrival algorithm, i.e. a method to check if a given datum is present in 
+    the data structure. I would imagine that this could be done by going to the hash value index of the array,
+    and then checking the value there, if the value is there and it's not equal to what we're searching for,
+    and there's data at a neighboring address, keep checking until a "gap" is reached. 
+    This might work, but what about the instances of data that is removed? And what happens when the array
+    starts to get so full that clusters of data start intersecting with eachother?
+
+    This is where the concept of "load factor" , "clustering", and "cycles" come in. Load factor is simply the proportion of
+    the array which is full. And with linear probing, you ideally want less than 60% of the array filled in order
+    to minimize the number of operations required to search and to insert. As the load factor nears 100% the 
+    time complexity "decays" from constant time to linear time because the number of steps nears the size of the array
+    and the array being totaly saturated would imply it's the same size as our input i.e. "n".
+
+    clustering is the phenomenon in hash tables (with less than ideal hash funcitons more often than not)
+    where data ends up in large groups. This is because if spot x is full, new data is inserted at x+1, but 
+    that also means that there is now a "cluster" of two contiguous pieces of data, and as that cluster grows
+    the chance of each subsequent piece of data intersecting an existing cluster grows as the load factor increases.
+
+    This is where the idea of "double hashing" comes in. Wherein instead of just inserting data at
+    a neighboring index in the instance of a colision, we instead use the hash function again to 
+    generate a distance that we need to move in order to check for an empty place. So for example if our
+    second hash function returns the number 8, we will try and insert the input data at (colision_loc + 8)
+
+    This howeever, brings the risk of "cycles". A cycle is defined as a situation where during an insertion
+    operation our piece of data is never able to find a "home", and a cycle is achieved when the initial 
+    array location is checked a second time. In our example where the second hash function during a double
+    hash returns 8, and index + 8 is full, and index + 8 + 8 is full, and so on, until we reach index again, we
+    have a cycle. In this case generally a new, larger array is instantiated and the existing data copied over.
+
+The second method of implementing a hash table, and the method I used in this problem is know as "closed addressing"
+    Closed addressing has this name because the result of the hash function is ALWAYS the location
+    the input data is stored at. 
+
+    This is possible because a closed address hash table is an array of linked lists.
+    the "parent" array has either NULL or a "node" pointer at each index and in the case of a colision,
+    a "node" is simply "prepended" to the linked list whose head is at the index location.
+
+    The advantage of this method is simplicity. It seems more complex, but unlike with linear probing,
+    we dont have to worry about load factor being so low, and we dont have to worry about cycles, and 
+    we don't have to worry about data deletion creating hurdles.
+
+    The main issue, though, is speed. It's much slower to traverse a linked list than it is to iterate over
+    an array, so as colisions increase, it is my assumption that performance would degrade faster with this
+    method. 
+
+Ideally both implementations of a hash map would have O(1) i.e "constant time" for insertion, deletion,
+and search. In reality this isn't ever quite the case, and in a truly terrible implementation the 
+speed could be linear much like the nieve solution. We can imagine an array of size one forcing every
+piece of data to colide and just become a linked list with extra steps. Or a hash algorithm that does't
+properly "avalance", and ends up causing clustering.
+
+But in general, this data structure is much faster than array at lookups and deletions.
